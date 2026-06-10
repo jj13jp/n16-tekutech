@@ -13,28 +13,30 @@ type Props = {
 
 export async function generateStaticParams() {
 	const { contents } = await getCategories()
-	return contents.map((category) => ({ id: category.id }))
+	return contents.map((category) => ({ id: category.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { id } = await params
+	const { id: slug } = await params
 	const { contents } = await getCategories()
-	const category = contents.find((c) => c.id === id)
+	const category = contents.find((c) => c.slug === slug)
 	if (!category) return {}
 	return { title: `${category.name} の記事一覧` }
 }
 
 async function CategoryArticleSection({
-	id,
+	categoryId,
+	slug,
 	searchParams,
 }: {
-	id: string
+	categoryId: string
+	slug: string
 	searchParams: Promise<{ page?: string }>
 }) {
 	const { page } = await searchParams
 	const currentPage = Number(page) || 1
 	const { contents: articles, totalCount } = await getArticlesByCategory(
-		id,
+		categoryId,
 		currentPage,
 	)
 
@@ -53,7 +55,7 @@ async function CategoryArticleSection({
 				<Pagination
 					totalCount={totalCount}
 					currentPage={currentPage}
-					basePath={`/categories/${id}`}
+					basePath={`/categories/${slug}`}
 				/>
 			</div>
 		</>
@@ -61,9 +63,9 @@ async function CategoryArticleSection({
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-	const { id } = await params
+	const { id: slug } = await params
 	const { contents: categories } = await getCategories()
-	const category = categories.find((c) => c.id === id)
+	const category = categories.find((c) => c.slug === slug)
 	if (!category) notFound()
 
 	return (
@@ -72,7 +74,11 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 				カテゴリ: {category.name}
 			</h1>
 			<Suspense fallback={<p className="text-zinc-500">読み込み中...</p>}>
-				<CategoryArticleSection id={id} searchParams={searchParams} />
+				<CategoryArticleSection
+					categoryId={category.id}
+					slug={slug}
+					searchParams={searchParams}
+				/>
 			</Suspense>
 		</main>
 	)

@@ -13,28 +13,30 @@ type Props = {
 
 export async function generateStaticParams() {
 	const { contents } = await getTags()
-	return contents.map((tag) => ({ id: tag.id }))
+	return contents.map((tag) => ({ id: tag.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { id } = await params
+	const { id: slug } = await params
 	const { contents } = await getTags()
-	const tag = contents.find((t) => t.id === id)
+	const tag = contents.find((t) => t.slug === slug)
 	if (!tag) return {}
 	return { title: `#${tag.name} の記事一覧` }
 }
 
 async function TagArticleSection({
-	id,
+	tagId,
+	slug,
 	searchParams,
 }: {
-	id: string
+	tagId: string
+	slug: string
 	searchParams: Promise<{ page?: string }>
 }) {
 	const { page } = await searchParams
 	const currentPage = Number(page) || 1
 	const { contents: articles, totalCount } = await getArticlesByTag(
-		id,
+		tagId,
 		currentPage,
 	)
 
@@ -53,7 +55,7 @@ async function TagArticleSection({
 				<Pagination
 					totalCount={totalCount}
 					currentPage={currentPage}
-					basePath={`/tags/${id}`}
+					basePath={`/tags/${slug}`}
 				/>
 			</div>
 		</>
@@ -61,9 +63,9 @@ async function TagArticleSection({
 }
 
 export default async function TagPage({ params, searchParams }: Props) {
-	const { id } = await params
+	const { id: slug } = await params
 	const { contents: tags } = await getTags()
-	const tag = tags.find((t) => t.id === id)
+	const tag = tags.find((t) => t.slug === slug)
 	if (!tag) notFound()
 
 	return (
@@ -72,7 +74,11 @@ export default async function TagPage({ params, searchParams }: Props) {
 				#{tag.name}
 			</h1>
 			<Suspense fallback={<p className="text-zinc-500">読み込み中...</p>}>
-				<TagArticleSection id={id} searchParams={searchParams} />
+				<TagArticleSection
+					tagId={tag.id}
+					slug={slug}
+					searchParams={searchParams}
+				/>
 			</Suspense>
 		</main>
 	)

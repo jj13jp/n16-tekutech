@@ -48,7 +48,7 @@ export default async function ArticlePage({ params }: Props) {
 						)}
 						{article.category && (
 							<Link
-								href={`/categories/${article.category.id}`}
+								href={`/categories/${article.category.slug}`}
 								className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400"
 							>
 								{article.category.name}
@@ -63,7 +63,7 @@ export default async function ArticlePage({ params }: Props) {
 							{article.tags.map((tag) => (
 								<Link
 									key={tag.id}
-									href={`/tags/${tag.id}`}
+									href={`/tags/${tag.slug}`}
 									className="rounded-full border border-zinc-200 px-2 py-0.5 text-xs text-zinc-500 hover:border-zinc-400 dark:border-zinc-700"
 								>
 									#{tag.name}
