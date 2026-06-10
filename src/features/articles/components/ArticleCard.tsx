@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import type { Article } from "@/types/microcms"
+import type { Article } from "@/features/articles/types"
 
 type Props = {
 	article: Article
@@ -26,7 +26,9 @@ export function ArticleCard({ article }: Props) {
 			)}
 			<div className="flex flex-col gap-2">
 				<div className="flex items-center gap-2 text-xs text-zinc-500">
-					{publishedAt && <time dateTime={article.publishedAt}>{publishedAt}</time>}
+					{publishedAt && (
+						<time dateTime={article.publishedAt}>{publishedAt}</time>
+					)}
 					{article.category && (
 						<Link
 							href={`/categories/${article.category.id}`}

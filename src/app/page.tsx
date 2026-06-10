@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
-import { ArticleCard } from "@/components/ArticleCard"
-import { Pagination } from "@/components/Pagination"
-import { getArticles } from "@/lib/microcms"
+import { getArticles } from "@/features/articles/api"
+import { ArticleCard } from "@/features/articles/components/ArticleCard"
+import { Pagination } from "@/shared/components/Pagination"
 
 export const metadata: Metadata = {
 	title: "Tech まとめブログ",
@@ -30,7 +30,11 @@ async function ArticleListSection({ searchParams }: SearchParamsProps) {
 				</div>
 			)}
 			<div className="mt-10">
-				<Pagination totalCount={totalCount} currentPage={currentPage} basePath="/" />
+				<Pagination
+					totalCount={totalCount}
+					currentPage={currentPage}
+					basePath="/"
+				/>
 			</div>
 		</>
 	)

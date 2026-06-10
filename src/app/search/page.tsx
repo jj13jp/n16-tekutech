@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
-import { ArticleCard } from "@/components/ArticleCard"
-import { Pagination } from "@/components/Pagination"
-import { SearchForm } from "@/components/SearchForm"
-import { searchArticles } from "@/lib/microcms"
+import { searchArticles } from "@/features/articles/api"
+import { ArticleCard } from "@/features/articles/components/ArticleCard"
+import { SearchForm } from "@/features/search/components/SearchForm"
+import { Pagination } from "@/shared/components/Pagination"
 
 export const metadata: Metadata = { title: "検索" }
 

@@ -1,14 +1,6 @@
 import type { MicroCMSImage, MicroCMSListContent } from "microcms-js-sdk"
-
-export type Category = MicroCMSListContent & {
-	name: string
-	slug: string
-}
-
-export type Tag = MicroCMSListContent & {
-	name: string
-	slug: string
-}
+import type { Category } from "@/features/categories/types"
+import type { Tag } from "@/features/tags/types"
 
 export type Article = MicroCMSListContent & {
 	title: string

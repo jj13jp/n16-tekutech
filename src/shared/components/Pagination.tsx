@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { PER_PAGE } from "@/lib/microcms"
+import { PER_PAGE } from "@/shared/lib/microcms"
 
 type Props = {
 	totalCount: number

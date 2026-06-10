@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { ArticleCard } from "@/components/ArticleCard"
-import { Pagination } from "@/components/Pagination"
-import { getArticlesByCategory, getCategories } from "@/lib/microcms"
+import { getArticlesByCategory } from "@/features/articles/api"
+import { ArticleCard } from "@/features/articles/components/ArticleCard"
+import { getCategories } from "@/features/categories/api"
+import { Pagination } from "@/shared/components/Pagination"
 
 type Props = {
 	params: Promise<{ id: string }>
@@ -32,7 +33,10 @@ async function CategoryArticleSection({
 }) {
 	const { page } = await searchParams
 	const currentPage = Number(page) || 1
-	const { contents: articles, totalCount } = await getArticlesByCategory(id, currentPage)
+	const { contents: articles, totalCount } = await getArticlesByCategory(
+		id,
+		currentPage,
+	)
 
 	return (
 		<>

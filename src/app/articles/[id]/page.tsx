@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { getAllArticleIds, getArticle } from "@/lib/microcms"
-import { sanitizeContent } from "@/lib/sanitize"
+import { getAllArticleIds, getArticle } from "@/features/articles/api"
+import { sanitizeContent } from "@/shared/lib/sanitize"
 
 type Props = {
 	params: Promise<{ id: string }>
