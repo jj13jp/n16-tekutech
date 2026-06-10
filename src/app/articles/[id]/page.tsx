@@ -46,7 +46,7 @@ export default async function ArticlePage({ params }: Props) {
 						{publishedAt && (
 							<time dateTime={article.publishedAt}>{publishedAt}</time>
 						)}
-						{article.category && (
+						{article.category?.slug && (
 							<Link
 								href={`/categories/${article.category.slug}`}
 								className="rounded-full bg-zinc-100 px-3 py-1 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-400"
@@ -83,10 +83,14 @@ export default async function ArticlePage({ params }: Props) {
 						</div>
 					)}
 				</header>
-				<div
-					className="prose prose-zinc dark:prose-invert max-w-none"
-					dangerouslySetInnerHTML={{ __html: sanitizeContent(article.body) }}
-				/>
+				{article.content && (
+					<div
+						className="prose prose-zinc dark:prose-invert max-w-none"
+						dangerouslySetInnerHTML={{
+							__html: sanitizeContent(article.content),
+						}}
+					/>
+				)}
 			</article>
 			<div className="mt-12">
 				<Link

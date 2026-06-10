@@ -4,9 +4,9 @@ import type { Tag } from "@/features/tags/types"
 
 export type Article = MicroCMSListContent & {
 	title: string
-	body: string
+	content: string
 	coverImage?: MicroCMSImage
-	category: Category
-	tags: Tag[]
+	category: Category | null
+	tags?: Tag[]
 	summary?: string
 }
