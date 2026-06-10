@@ -27,10 +27,15 @@
       "Bash(git clean:*)",
       "Bash(git branch -D:*)",
       "Bash(npm install:*)",
+      "Bash(npm i:*)",
       "Bash(pnpm add:*)",
       "Bash(pnpm install:*)",
+      "Bash(pnpm i:*)",
       "Bash(pn add:*)",
-      "Bash(pn install:*)"
+      "Bash(pn install:*)",
+      "Bash(pn i:*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)"
     ],
     "deny": [
       "Bash(rm:*)",
